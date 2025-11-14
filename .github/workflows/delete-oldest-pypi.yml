@@ -37,4 +37,4 @@ jobs:
           PYPI_UI_PASSWORD: ${{ secrets.PYPI_UI_PASSWORD }}
           PYPI_UI_TOTP_SECRET: ${{ secrets.PYPI_UI_TOTP_SECRET }}
           PACKAGE_NAME: omar8345-test-module
-        run: npm start
+        run: npm run cleanup
