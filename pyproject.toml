@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "omar8345-test-module"
-version = "0.0.2"
+version = "0.0.5"
 description = "Throwaway package for GitHub Workflow Testing"
 readme = "README.md"
 authors = [{ name = "Omar Moustafa", email = "yo@omarcodes.io" }]

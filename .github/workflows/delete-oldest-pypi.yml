@@ -1,0 +1,40 @@
+name: Delete Oldest PyPI Release
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  delete-oldest-pypi:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "npm"
+          cache-dependency-path: ".github/scripts/pypi-cleanup/package-lock.json"
+
+      - name: Install dependencies
+        working-directory: .github/scripts/pypi-cleanup
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: .github/scripts/pypi-cleanup
+        run: npx playwright install chromium
+
+      - name: Run PyPI cleanup
+        working-directory: .github/scripts/pypi-cleanup
+        env:
+          PYPI_UI_USERNAME: ${{ secrets.PYPI_UI_USERNAME }}
+          PYPI_UI_PASSWORD: ${{ secrets.PYPI_UI_PASSWORD }}
+          PYPI_UI_TOTP_SECRET: ${{ secrets.PYPI_UI_TOTP_SECRET }}
+          PACKAGE_NAME: omar8345-test-module
+        run: npm start
